@@ -21,8 +21,16 @@ app.get('/hello', (request, response) => {
   response.send('hello from ejs');
 });
 
+app.get('/searches/new', (request, response) => {
+  response.render('./pages/searches/new');
+});
+
+app.post('/searches', (request, response) => {
+  response.send(request.body);
+});
+
 app.get('/', (request, response) => {
-  response.render('./pages/index.ejs', );
+  response.render('./pages/index.ejs');
 });
 
 app.listen(PORT, () => {
