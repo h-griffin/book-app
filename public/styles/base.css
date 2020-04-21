@@ -1,0 +1,9 @@
+@import url('../styles/icons.css');
+@import url('../styles/layout.css');
+@import url('../styles/modules.css');
+@import url('../styles/reset.css');
+
+body{
+  background-color: lightgray;
+  font-family: monospace;
+}
