@@ -34,33 +34,19 @@ app.get('/searches/new', (request, response) => {
   response.render('./pages/searches/new');
 });
 
-// app.post('/searches', (request, response) => {
-//   response.send(request.body);
-// });
-
-//jacob post w superagent
-app.post('/searches', (request, response) => {
-  let queryType = request.body.search;
-  let queryTerms = request.body.query;
-  let url = `https://www.googleapis.com/books/v1/volumes?q=${queryType}:${queryTerms}`; //google api
+function bookHandler(request, response){
+  let queryType = request.body.search[0];
+  let queryTerms = request.body.search[1];
+  let url = `https://www.googleapis.com/books/v1/volumes?q=+in${queryTerms}:${queryType}`; //google api
   superagent.get(url) //returns promise
-    .then(results => {
-      let data = results.body.items.map(book => {
-        return new Book({
-          title: book.volumeInfo.title || 'test',
-          author: book.volumeInfo.authors[0] || 'test',
-          description: book.volumeInfo.description || 'test',
-          image: book.volumeInfo.imageLinks.smallThumbnail || 'test',
-          isbn: book.volumeInfo.industryIdentifiers[0].identifier || 'test',
-          bookshelf: 'test' || 'test',
-        });
-      });
-      response.send(data); //needs to be render later to show
-    })
+    .then(results => results.body.items.map(book => new Book(book.volumeInfo)))
+    .then(book => response.render('./pages/searches/show', {book : book})) //send- needs to be render later on to show
     .catch(error => {
       console.log('superagent error', request, response);
     });
-});
+}
+
+app.post('/searches', bookHandler);
 
 app.get('/', (request, response) => {
   response.render('./pages/index.ejs');
