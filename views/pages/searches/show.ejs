@@ -6,16 +6,52 @@
   <title>Document</title>
 </head>
 <body>
+  <header>Search Results</header>
   <h1>hello 911?</h1>
-  <% book.forEach(book => {%>
-
-    <img src= <%= book.image %>
-    <p><%= book.title %></p>
-    <p><%= book.author %></p>
-    <p><%= book.description %></p>
-    <p><%= book.isbn %></p>
-    <p><%= book.bookshelf %></p>
+  <div class='book'>
+    <% book.forEach(book => {%>
+  
+      <img src= <%= book.image %>
+      <p><%= book.title %></p>
+      <p><%= book.author %></p>
+      <p><%= book.description %></p>
+      <p><%= book.isbn %></p>
+      <p><%= book.bookshelf %></p>
+      
+      <% }) %>
+  </div>
+    <form action='/books' method='POST'>
+      <input type='text' name='search' placeholder='search by title or author' required> 
     
-    <% }) %>
+      <!-- <label for='i'></label>
+      <input type='radio' id='author' name='title' value='<%= book.title%>' required> -->
+
+      <label for='title'></label>
+        Title
+      <input type='radio' name='title' value='<%= book.title %>' required>
+    
+      <label for='author'></label>
+        Author
+      <input type='radio' name='author' value='<%= book.author %>' required>
+        
+      <label for='description'></label>
+      Description
+      <input type='radio' name='radio' value='<%= book.description %>' required>
+      
+      <label for='isbn'></label>
+      ISBN
+      <input type='radio' name='isbn' value='<%= book.isbn %>' required>
+      
+      <label for='bookshelf'></label>
+      Bookshelf
+      <input type='radio' name='bookshelf' value='<%= book.bookshelf %>' required>
+      
+      <label for='bookshelf'></label>
+        Image URl
+      <input type='radio' name='' value='<%= book.bookshelf %>' required>
+      
+      <button type='submit'>submit</button>
+    </form>
+    
 </body>
 </html>
