@@ -1,5 +1,39 @@
 /* colors */
+*{
+  text-align: center;
+  font-family: monospace;
+}
 
 body{
-  color: red;
+  background-color: lightgray;
+  font-family: monospace;
+}
+
+h2{
+  text-align: center;
+  font-family: ;
+}
+
+header{
+  background-color: grey;
+}
+
+nav{
+  background-color: darkgray;
+  line-height: 40px;
+}
+
+form{
+  color: black;
+  background-color: grey;
+  line-height: 20px;
+}
+
+label{
+  text-align: center;
+  font-family: monospace;
+}
+
+button{
+  line-height: 40px;
 }

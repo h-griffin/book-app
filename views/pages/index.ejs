@@ -4,12 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel='stylesheet' type='text/css' href='/styles/base.css'>
-  <title>Document</title>
+  <title>Server parsed HTML Form</title>
 </head>
 <body>
-  <a href='/searches/new'></a>
-  
-  <h1>Hello World from ejs</h1>
-  <p>this is from index.ejs</p>
+  <h1>Search, this is home page</h1>
+  <a href='searches/new'>search</a>
+  <%- include('./partials/bookDisplay.ejs', { books }) %>
 </body>
 </html>
