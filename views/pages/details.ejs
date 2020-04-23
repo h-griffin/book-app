@@ -6,14 +6,14 @@
   <title>Document</title>
 </head>
 <body>
-  <& = include('../partials/bookDisplay', { books: [book] })%>
+  <%- include('../partials/bookDisplay', { books: [book] })%>
   <form action='/books/<% book.id %>?_method=PUT' method='POST'>
     <input type='text' name='title' value='<%= book.title %>'>
-    <input type='text' name='author' value='<%= book.author %>'>
+    <input type='text' name='author' value='<%= book.authors %>'>
     <input type='text' name='description' value='<%= book.description %>'>
     <input type='text' name='isbn' value='<%= book.isbn %>'>
-    <input type='text' name='title' value='<%= book.title %>'>
-    <input type='text' name='title' value='<%= book.title %>'>
+    <input type='text' name='image_url' value='<%= book.image_url %>'>
+    <input type='text' name='bookshelf' value='<%= book.bookshelf %>'>
     <button type='submit'>submit</button>
   </form>
 </body>

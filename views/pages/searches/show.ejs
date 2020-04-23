@@ -3,55 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' type='text/css' href='/styles/base.css'>
   <title>Document</title>
 </head>
 <body>
-  <header>Search Results</header>
-  <h1>hello 911?</h1>
-  <div class='book'>
-    <% book.forEach(book => {%>
-  
-      <img src= <%= book.image %>
-      <p><%= book.title %></p>
-      <p><%= book.author %></p>
-      <p><%= book.description %></p>
-      <p><%= book.isbn %></p>
-      <p><%= book.bookshelf %></p>
-      
-      <% }) %>
-  </div>
-    <form action='/books' method='POST'>
-      <input type='text' name='search' placeholder='search by title or author' required> 
+  <header>
+    <h1>Search Results</h1>
+  </header>
+  <main>
+    <div class='book'>
+      <% book.forEach(book => {%>
     
-      <!-- <label for='i'></label>
-      <input type='radio' id='author' name='title' value='<%= book.title%>' required> -->
-
-      <label for='title'></label>
-        Title
-      <input type='radio' name='title' value='<%= book.title %>' required>
-    
-      <label for='author'></label>
-        Author
-      <input type='radio' name='author' value='<%= book.author %>' required>
+        <h2><%= book.title %></h2> <br>
+        <p><%= book.author %></p> <br>
+        <img src=<%= book.image_url %> />
+        <p><%= book.description %></p> <br>
+        <p><%= book.isbn %></p> <br>
+        <p><%= book.bookshelf %></p> <br>
         
-      <label for='description'></label>
-      Description
-      <input type='radio' name='radio' value='<%= book.description %>' required>
-      
-      <label for='isbn'></label>
-      ISBN
-      <input type='radio' name='isbn' value='<%= book.isbn %>' required>
-      
-      <label for='bookshelf'></label>
-      Bookshelf
-      <input type='radio' name='bookshelf' value='<%= book.bookshelf %>' required>
-      
-      <label for='bookshelf'></label>
-        Image URl
-      <input type='radio' name='' value='<%= book.bookshelf %>' required>
-      
-      <button type='submit'>submit</button>
-    </form>
-    
+        <form action='/books' method='POST'>
+          <fieldset>
+            <input type='hidden' name='search' placeholder='search by title or author' required> 
+            
+            <!-- <label for='i'></label>
+              <input type='radio' id='author' name='title' value='<%= book.title%>' required> -->
+              
+              <label for='title'>
+                <input type='hidden' name='title' value='<%= book.title %>'>
+              </label>
+              
+              <label for='author'>
+                <input type='hidden' name='author' value='<%= book.author %>'>
+              </label>
+              
+              <label for='description'>
+                <input type='hidden' name='description' value='<%= book.description %>'><br>
+              </label>
+
+              <label for='isbn'>
+                <input type='hidden' name='isbn' value='<%= book.isbn %>'>
+              </label>
+              
+              <label for='image_url'>
+                <input type='hidden' name='image_url' value='<%= book.image_url %>'>
+              </label>
+              
+              <label for='bookshelf'>
+                <input type='hidden' name='bookshelf' value='<%= book.bookshelf %>'>
+              </label>
+            </fieldset>
+            <button type='submit'>save book</button>
+          </form>
+        </div>
+      <% }) %>
+    </main>
 </body>
 </html>

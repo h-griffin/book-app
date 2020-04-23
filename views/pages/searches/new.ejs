@@ -3,15 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel='stylesheet' type='text/css' href='/styles/base.css'>
+  <title>Search View</title>
 </head>
 <body>
+  <nav>
+    <h2>Best Books!</h2>
+  </nav>
+  <header>
+    <h3>Search by title or author</h3>
+  </header>
   <form action='/searches' method='POST'>
-        <input type='text' name='search' placeholder='search by title or author' required> 
+        <input type='text' name='search' placeholder='Enter title or author' required> <br>
+        
       <label for='aName'>Search by Author</label>
-        <input type='radio' id='author' name='search' value='author' required>
+        <input type='radio' id='author' name='search' value='author' required> <br>
+
       <label for='tName'>Search by Title</label>
-        <input type='radio' id='title' name='search' value='title' required>
+        <input type='radio' id='title' name='search' value='title' required> <br>
+
     <button type='submit'>submit</button>    
   </form>
 </body>

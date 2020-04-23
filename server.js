@@ -31,30 +31,14 @@ app.use(express.static('public'));
 
 //volhas constructor
 function Book(data){
-  this.imageUrl = parseImageUrl(data.imageLinks.smallThumbnail);
-  this.title = data.title;
-  this.author = data.author;
-  this.description = data.description;
-  this.isbn = `${data.industryIdentifiers[0].type} ${data.industryIdentifiers[0].identifier}`;
-  this.bookshelf = data.bookshelf;
-}
-//old one just in case
-// function Book(data){
-//   this.image= data.image;
-//   this.title = data.title;
-//   this.author = data.author;
-//   this.description = data.description;
-//   this.isbn = data.isbn;
-//   this.bookshelf =data.bookshelf;
-// }
-
-//change http to https ? 'turnary'?
-function parseImageUrl(imageUrl){
-  if(imageUrl !== ''){
-    return imageUrl.includes('http://')
-      ? imageUrl.replace(/^http:/, 'https:')
-      : imageUrl;
-  }
+  const placeHolderImage ='https://i.imgur.com/J5LVHEL.jpg';
+  let httpRegex = /^(http:\/\/)/g;
+  this.title = data.title ? data.title : 'no title here';
+  this.author = data.authors ? data.authors[0] : 'no author';
+  this.description = data.description ? data.description : 'no description';
+  this.isbn = data.industryIdentifiers ? `ISBN_13 ${data.industryIdentifiers[0].identifier}` : 'no isbn';
+  this.image_url = data.imageLinks ? data.imageLinks.smallThumbnail.replace(httpRegex, 'https://') : placeHolderImage;
+  this.bookshelf = data.bookshelf ? data.bookshelf : 'no bookshelf';
 }
 
 app.get('/hello', (request, response) => {
@@ -73,7 +57,7 @@ function bookHandler(request, response){
     .then(results => results.body.items.map(book => new Book(book.volumeInfo)))
     .then(book => response.render('./pages/searches/show', {book : book})) //send- needs to be render later on to show
     .catch(error => {
-      errorHandler('superagent error', request, response);
+      errorHandler('book handler error: superagent', request, response);
     });
 }
 
@@ -83,7 +67,7 @@ app.post('/searches', bookHandler);
 //   response.render('./pages/index.ejs');
 // });
 
-//jacob something with database
+//jacob something with database    /this home page '/'
 app.get('/', (request, response) => {
   let selectQuery = `SELECT * FROM books;`;
   return dbClient.query(selectQuery)
@@ -92,7 +76,7 @@ app.get('/', (request, response) => {
         console.log('RENDER FROM DB');
         response.render('pages/searches/new');
       } else {
-        response.send('/pages/index', {books : results.rows, count : results.rowCount});
+        response.render('./pages/index', {books : results.rows, count : results.rowCount});
       }
     })
     .catch(error => {
@@ -100,7 +84,7 @@ app.get('/', (request, response) => {
     });
 });
 
-//jacob / express? database?
+//jacob / express? database? /view saved books?
 app.get('/books/:id', (request, response) => {
   const bookId = request.params.id; //attach data and influence rout
 
@@ -120,13 +104,13 @@ app.get('/books/:id', (request, response) => {
 //if no book id
 app.get('books', (request,response) => response.send('no id present'));
 
-//insert api info into DB
+//insert api info into DB / save book / after save book
 app.post('/books', (request, response) => {
   const { title, author, description, isbn, image_url, bookshelf } = request.body;
 
-  let addBookSQL = `INSERT INTO books (title, author, description, isbn, image_url, bookshelf) VALUES ($1, $2, $3, $4, $5, $6)`;
+  let addBookSQL = `INSERT INTO books (title, author, description, isbn, image_url, bookshelf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
   let addBookValues = [title, author, description, isbn, image_url, bookshelf];
-
+  console.log( addBookSQL, addBookValues);
   dbClient.query(addBookSQL, addBookValues)
     .then(data => {
       console.log(data.rows);
@@ -150,6 +134,7 @@ app.put('/books/:id', (request, response) => {
   let values = [title, author, description, image_url, isbn, bookshelf, bookId];
 
   //use SQL UPDATE WHERE to modify the row record
+
   dbClient.query(SQL, values)
     .then(data => {
       response.send(data); //render later
