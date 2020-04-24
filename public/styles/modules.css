@@ -9,9 +9,18 @@ body{
   font-family: monospace;
 }
 
+h1, a{
+  text-align: center;
+  font-family: monospace;
+  background-color: grey;
+  line-height: 50px;
+}
+
 h2{
   text-align: center;
-  font-family: ;
+  font-family: monospace;
+  background-color: grey;
+
 }
 
 header{
@@ -36,4 +45,8 @@ label{
 
 button{
   line-height: 40px;
+}
+
+article{
+  background-color: darkgray;
 }

@@ -7,8 +7,16 @@
   <title>Server parsed HTML Form</title>
 </head>
 <body>
-  <h1>Search, this is home page</h1>
-  <a href='searches/new'>search</a>
-  <%- include('./partials/bookDisplay.ejs', { books }) %>
+  <header>
+    <h1>Home</h1>
+  </header>
+  <nav>
+    <li><a href='searches/new'>Search the Google API</a></li>
+  </nav>
+  
+  <article>
+    <%- include('./partials/bookDisplay.ejs', { books }) %>
+  </article>
+
 </body>
 </html>

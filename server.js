@@ -104,26 +104,25 @@ app.get('/books/:id', (request, response) => {
 //if no book id
 app.get('books', (request,response) => response.send('no id present'));
 
-//insert api info into DB / save book / after save book
+//insert api info into DB / save book / after click save book
 app.post('/books', (request, response) => {
   const { title, author, description, isbn, image_url, bookshelf } = request.body;
 
-  let addBookSQL = `INSERT INTO books (title, author, description, isbn, image_url, bookshelf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+  let addBookSQL = `INSERT INTO books (title, author, description, isbn, image_url, bookshelf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`;
   let addBookValues = [title, author, description, isbn, image_url, bookshelf];
-  console.log( addBookSQL, addBookValues);
+  // console.log( addBookSQL, addBookValues);
   dbClient.query(addBookSQL, addBookValues)
     .then(data => {
       console.log(data.rows);
-      response.send('adding book in progress');
+      // response.send('adding book in progress');
       response.render('pages/details', {book: data.rows[0]});
     })
     .catch(error => {
       errorHandler('somethings bad over here', request, response);
     });
-  // response.send({title, author, description, isbn, image_url, bookshelf});
 });
 
-//update a resource
+//update a resource / database
 app.put('/books/:id', (request, response) => {
   const bookId = request.params.id;
   const { title, author, description, image_url, isbn, bookshelf} = request.body;
