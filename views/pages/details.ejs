@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' type='text/css' href='/styles/base.css'>
   <title>Document</title>
 </head>
 <body>
-  <%- include('../partials/bookDisplay', { books: [book] })%>
+  <%- include('partials/bookDisplay', { books: [book] })%>
   <form action='/books/<% book.id %>?_method=PUT' method='POST'>
     <input type='text' name='title' value='<%= book.title %>'>
-    <input type='text' name='author' value='<%= book.authors %>'>
+    <input type='text' name='author' value='<%= book.author %>'>
     <input type='text' name='description' value='<%= book.description %>'>
     <input type='text' name='isbn' value='<%= book.isbn %>'>
     <input type='text' name='image_url' value='<%= book.image_url %>'>
