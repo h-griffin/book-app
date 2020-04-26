@@ -13,8 +13,8 @@ CREATE TABLE books(
 INSERT INTO books (title, author, description, isbn, image_url, bookshelf) VALUES (
   'Dune',
   'Frank Herbert',
-  'ISBN_13 9780441013593',
-  'link i dont want to do rn',
   'Follows fhhfoeivn description',
+  'ISBN_13 9780441013593',
+  'https://i.imgur.com/J5LVHEL.jpg',
   'Fantasy'
 );

@@ -38,7 +38,7 @@ function Book(data){
   this.description = data.description ? data.description : 'no description';
   this.isbn = data.industryIdentifiers ? `ISBN_13 ${data.industryIdentifiers[0].identifier}` : 'no isbn';
   this.image_url = data.imageLinks ? data.imageLinks.smallThumbnail.replace(httpRegex, 'https://') : placeHolderImage;
-  this.bookshelf = data.bookshelf ? data.bookshelf : 'no bookshelf';
+  this.bookshelf = data.categories ? data.categories : 'no bookshelf';
 }
 
 app.get('/hello', (request, response) => {
@@ -67,8 +67,10 @@ app.post('/searches', bookHandler);
 //   response.render('./pages/index.ejs');
 // });
 
-//jacob something with database    /this home page '/'
-app.get('/', (request, response) => {
+//jacob something with database    / this home page '/'
+app.get('/', renderHomePage);
+
+function renderHomePage(request ,response){
   let selectQuery = `SELECT * FROM books;`;
   return dbClient.query(selectQuery)
     .then(results => {
@@ -82,10 +84,12 @@ app.get('/', (request, response) => {
     .catch(error => {
       errorHandler('database error', request, response);
     });
-});
+}
 
-//jacob / express? database? /view saved books?
-app.get('/books/:id', (request, response) => {
+//jacob /view saved books
+app.get('/books/:id', savedBooks);
+
+function savedBooks(request, response){
   const bookId = request.params.id; //attach data and influence rout
 
   console.log(request.query); // url query stings : ?key:value
@@ -99,7 +103,7 @@ app.get('/books/:id', (request, response) => {
       console.log(data.rows);
       response.send('In Progress');
     });
-});
+}
 
 //if no book id
 app.get('books', (request,response) => response.send('no id present'));

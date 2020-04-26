@@ -14,6 +14,10 @@
     <li><a href='searches/new'>Search the Google API</a></li>
   </nav>
   
+  <h3>you have 
+    <%= count %>
+    books in your library
+  </h3>
   <article>
     <%- include('./partials/bookDisplay.ejs', { books }) %>
   </article>
