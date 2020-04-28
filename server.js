@@ -96,24 +96,25 @@ function savedBooks(request, response){
   dbClient.query(selectQuery, selectValues)
     .then(data => {
       console.log(data.rows);
-      response.send('In Progress');
+      // response.send('In Progress');
+      response.render('pages/details', {book: data.rows[0]});
     });
 }
 
 function updateBook(request, response){
   const bookId = request.params.id;
-  const { title, author, description, image_url, isbn, bookshelf} = request.body;
+  const { title, author, description, isbn, image_url, bookshelf} = request.body;
   console.log(request.body.title);
 
   //query db for books that have id
-  let SQL =`UPDATE books SET title=$1, author=$2, description=$3, image_url=$4, isbn=$5, bookshelf=$6 WHERE id=$7`;
-  let values = [title, author, description, image_url, isbn, bookshelf, bookId];
+  let SQL =`UPDATE books SET title=$1, author=$2, description=$3, isbn=$4, image_url=$5, bookshelf=$6 WHERE id=$7;`;
+  let values = [title, author, description, isbn, image_url, bookshelf, bookId];
 
   //use SQL UPDATE WHERE to modify the row record
   dbClient.query(SQL, values)
-    .then(data => {
-      response.send(data); //render later
-    })
+    .then(
+      response.redirect(`/books/${bookId}`) //render later
+    )
     .catch(error =>{
       errorHandler('this is an error bad bad', request, response);
     });
@@ -121,7 +122,7 @@ function updateBook(request, response){
   //send back new row
 
   //invalidate old thing and replace with new
-  response.send(bookId);
+  // response.send(bookId);
 }
 
 app.get('/hello', (request, response) => {
