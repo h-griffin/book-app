@@ -1,4 +1,4 @@
-<form id='delete' action='/books/<% book.id %>?_method=DELETE' method='POST'>
+<form id='delete' action='/books/<%= book.id %>?_method=DELETE' method='POST'>
   <input type='text' name='title' value='<%= book.title %>'>
   <input type='text' name='author' value='<%= book.author %>'>
   <input type='text' name='description' value='<%= book.description %>'>

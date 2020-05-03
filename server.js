@@ -109,15 +109,16 @@ function updateBook(request, response){
   console.log(request.body.title);
 
   //query db for books that have id
-  let SQL =`UPDATE books SET title=$1, author=$2, description=$3, isbn=$4, image_url=$5, bookshelf=$6 WHERE id=$7;`;
+  let SQL =`UPDATE books SET title=$1, author=$2, description=$3, isbn=$4, image_url=$5, bookshelf=$6 WHERE id=$7 RETURNING *;`;
   let values = [title, author, description, isbn, image_url, bookshelf, bookId];
-
+  console.log('top of update');
   //use SQL UPDATE WHERE to modify the row record
   dbClient.query(SQL, values)
-    .then(
-      response.redirect(`/books/${bookId}`) //render later
-    )
-    .catch(error =>{
+    .then( dataResponseWord => {
+      response.send('update is working');
+      console.log('im inside update');
+      // response.redirect(`/books/${bookId}`)//render later
+    }).catch(error =>{
       errorHandler('this is an error bad bad', request, response);
     });
 
