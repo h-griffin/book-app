@@ -126,20 +126,20 @@ function deleteBook(request, response){
   let deleteSQL = `DELETE FROM books WHERE id=$1 RETURNING *;`;
   let deletedValues = [bookId];
 
-  // dbClient.query(deleteSQL, deletedValues)
-  //   .then(data => {
-  //     dbClient.query(matchSQL)
-  //       .then(results => {
-  //         console.log(results);
-  //         if(results.rowCount === 0){
-  //           response.render('./pages/searches/new');
-  //         }else{
-  //           response.render('./pages/index', { book : results });
-  //         }
-  //       }).catch(error => {
-  //         errorHandler('delete error: database', request, response);
-  //       });
-  //   });
+  dbClient.query(deleteSQL, deletedValues)
+    .then(data => {
+      dbClient.query(matchSQL)
+        .then(results => {
+          console.log(results);
+          if(results.rowCount === 0){
+            response.render('./pages/searches/new');
+          }else{
+            response.render('./pages/index', { books : results.rows, count : results.rowCount});
+          }
+        }).catch(error => {
+          errorHandler('delete error: database', request, response);
+        });
+    });
 }
 
 app.get('/hello', (request, response) => {
@@ -158,7 +158,7 @@ app.post('/searches', bookHandler);
 app.post('/books', saveBook);
 app.get('/books/:id', savedBooks);
 app.put('/books/:id', updateBook);
-app.delete('books/:id', deleteBook);
+app.delete('/books/:id', deleteBook);
 
 function errorHandler(error, request, response){
   console.log(error);
