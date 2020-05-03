@@ -13,16 +13,10 @@
     <p><%= book.description %></p> <br>
     <p><%= book.isbn %></p> <br>
     <p><%= book.bookshelf %></p> <br>
-  <h3>update your book!</h3>
-  <form action='/books/<% book.id %>?_method=PUT' method='POST'>
-    <input type='text' name='title' value='<%= book.title %>'>
-    <input type='text' name='author' value='<%= book.author %>'>
-    <input type='text' name='description' value='<%= book.description %>'>
-    <input type='text' name='isbn' value='<%= book.isbn %>'>
-    <input type='text' name='image_url' value='<%= book.image_url %>'>
-    <input type='text' name='bookshelf' value='<%= book.bookshelf %>'>
-    <button type='submit'>update book</button>
-  </form>
+  <h3>Update this book</h3>
+  <%- include ('partials/edit') %>
+  <h3>Delete this book</h3>
+  <%- include ('partials/delete') %>
   <a href='/'>back to library</a>
 </body>
 </html>
