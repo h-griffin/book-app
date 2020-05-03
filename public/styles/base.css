@@ -27,9 +27,8 @@ nav{
 
 article{
   padding-top: 20px;
-  text-align: center;
-  width: 200px;
-  height: 275px;
+  /* text-align: center; */
+  width: 100%;
   background-color: darkgray;
 }
 
@@ -40,14 +39,14 @@ ul {
   display: flex;
   overflow: hidden;
   background-color: #333;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   /* flex-wrap: nowrap; */
 }
 
 li {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   height: 100%;
   width: 30%;
   padding: 1px 20px;

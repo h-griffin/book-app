@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel='stylesheet' type='text/css' href='/styles/base.css'>
+  <script
+  src="https://code.jquery.com/jquery-3.5.0.js"
+  integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
+  crossorigin="anonymous"></script>
   <title>Document</title>
 </head>
 <body>    
@@ -16,24 +20,38 @@
     
   <h3>Update this book</h3>
   <form id='update' action='/books/<%= book.id %>?_method=PUT' method='POST'>
-    <input type='text' name='title' value='<%= book.title %>'>
-    <input type='text' name='author' value='<%= book.author %>'>
-    <input type='text' name='description' value='<%= book.description %>'>
-    <input type='text' name='isbn' value='<%= book.isbn %>'>
-    <input type='text' name='image_url' value='<%= book.image_url %>'>
-    <input type='text' name='bookshelf' value='<%= book.bookshelf %>'>
-    <button type='submit'>update book</button>
+    <input class='updateInfo' type='text' name='title' value='<%= book.title %>'>
+    <input class='updateInfo' type='text' name='author' value='<%= book.author %>'>
+    <input class='updateInfo' type='text' name='description' value='<%= book.description %>'>
+    <input class='updateInfo' type='text' name='isbn' value='<%= book.isbn %>'>
+    <input class='updateInfo' type='text' name='image_url' value='<%= book.image_url %>'>
+    <input class='updateInfo' type='text' name='bookshelf' value='<%= book.bookshelf %>'>
+    <button id='toggleUpdate' type='submit'>update book</button>
   </form>
+
+  <script>
+    $('#toggleUpdate').on('click', function(){
+      $('.updateInfo').toggle('ease-in-out')
+    })
+  </script>
+
   <h3>Delete this book</h3>
   <form id='delete' action='/books/<%= book.id %>?_method=DELETE' method='POST'>
-    <input type='text' name='title' value='<%= book.title %>'>
-    <input type='text' name='author' value='<%= book.author %>'>
-    <input type='text' name='description' value='<%= book.description %>'>
-    <input type='text' name='isbn' value='<%= book.isbn %>'>
-    <input type='text' name='image_url' value='<%= book.image_url %>'>
-    <input type='text' name='bookshelf' value='<%= book.bookshelf %>'>
-    <button type='submit'>delete book</button>
+    <input class='deleteInfo' type='text' name='title' value='<%= book.title %>'>
+    <input class='deleteInfo' type='text' name='author' value='<%= book.author %>'>
+    <input class='deleteInfo' type='text' name='description' value='<%= book.description %>'>
+    <input class='deleteInfo' type='text' name='isbn' value='<%= book.isbn %>'>
+    <input class='deleteInfo' type='text' name='image_url' value='<%= book.image_url %>'>
+    <input class='deleteInfo' type='text' name='bookshelf' value='<%= book.bookshelf %>'>
+    <button id='toggleDelete' type='submit'>delete book</button>
   </form>
+
+  <script>
+    $('#toggleDelete').on('click', function(){
+      $('.deleteInfo').toggle('ease-in-out')
+    })
+  </script>
+
   <a href='/'>back to library</a>
 </body>
 </html>

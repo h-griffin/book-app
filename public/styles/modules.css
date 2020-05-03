@@ -7,15 +7,24 @@
 h2{
   text-align: center;
   font-family: monospace;
-  background-color: grey;
+  /* background-color: grey; */
+  font-size: x-large;
+  color: red;
+}
+
+h3{
+  text-align: center;
+  font-family: monospace;
+  line-height: 50px;
+  height: 40px;
 
 }
 
-form{
+/* form{
   color: black;
   background-color: grey;
   line-height: 20px;
-}
+} */
 
 label{
   text-align: center;
