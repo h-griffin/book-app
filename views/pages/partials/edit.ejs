@@ -1,4 +1,4 @@
-<form id='update' action='/books/<% book.id %>?_method=PUT' method='POST'>
+<form id='update' action='/books/<%= book.id %>?_method=PUT' method='POST'>
   <input type='text' name='title' value='<%= book.title %>'>
   <input type='text' name='author' value='<%= book.author %>'>
   <input type='text' name='description' value='<%= book.description %>'>
