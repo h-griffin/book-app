@@ -29,6 +29,7 @@ app.set('view engine', 'ejs');
 //static routs
 app.use(express.static('public'));
 
+//constructor w turnaries
 function Book(data){
   const placeHolderImage ='https://i.imgur.com/J5LVHEL.jpg';
   let httpRegex = /^(http:\/\/)/g;
@@ -52,6 +53,7 @@ function bookHandler(request, response){
     });
 }
 
+//pulls books from database
 function renderHomePage(request ,response){
   let selectQuery = `SELECT * FROM books;`;
   return dbClient.query(selectQuery)
@@ -125,6 +127,29 @@ function updateBook(request, response){
   // response.send(bookId);
 }
 
+function deleteBook(request, response){
+  const bookId = request.params.id;
+  console.log('inside delete');
+  let matchSQL = `SELECT * FROM books;`;
+  let deleteSQL = `DELETE FROM books WHERE id=$1 RETURNING *;`;
+  let deletedValues = [bookId];
+
+  dbClient.query(deleteSQL, deletedValues)
+    .then(data => {
+      dbClient.query(matchSQL)
+        .then(results => {
+          console.log(results);
+          if(results.rowCount === 0){
+            response.render('./pages/searches/new');
+          }else{
+            response.render('./pages/index', { book : results });
+          }
+        }).catch(error => {
+          errorHandler('delete error: database', request, response);
+        });
+    });
+}
+
 app.get('/hello', (request, response) => {
   response.send('hello from ejs');
 });
@@ -141,6 +166,7 @@ app.post('/searches', bookHandler);
 app.post('/books', saveBook);
 app.get('/books/:id', savedBooks);
 app.put('/books/:id', updateBook);
+app.delete('books/:id', deleteBook);
 
 function errorHandler(error, request, response){
   console.log(error);
