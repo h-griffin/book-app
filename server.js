@@ -106,26 +106,17 @@ function savedBooks(request, response){
 function updateBook(request, response){
   const bookId = request.params.id;
   const { title, author, description, isbn, image_url, bookshelf} = request.body;
-  console.log(request.body.title);
 
   //query db for books that have id
   let SQL =`UPDATE books SET title=$1, author=$2, description=$3, isbn=$4, image_url=$5, bookshelf=$6 WHERE id=$7 RETURNING *;`;
   let values = [title, author, description, isbn, image_url, bookshelf, bookId];
-  console.log('top of update');
-  //use SQL UPDATE WHERE to modify the row record
+
   dbClient.query(SQL, values)
     .then( dataResponseWord => {
-      response.send('update is working');
-      console.log('im inside update');
-      // response.redirect(`/books/${bookId}`)//render later
+      response.redirect(`/books/${bookId}`)
     }).catch(error =>{
       errorHandler('this is an error bad bad', request, response);
     });
-
-  //send back new row
-
-  //invalidate old thing and replace with new
-  // response.send(bookId);
 }
 
 function deleteBook(request, response){
@@ -135,20 +126,20 @@ function deleteBook(request, response){
   let deleteSQL = `DELETE FROM books WHERE id=$1 RETURNING *;`;
   let deletedValues = [bookId];
 
-  dbClient.query(deleteSQL, deletedValues)
-    .then(data => {
-      dbClient.query(matchSQL)
-        .then(results => {
-          console.log(results);
-          if(results.rowCount === 0){
-            response.render('./pages/searches/new');
-          }else{
-            response.render('./pages/index', { book : results });
-          }
-        }).catch(error => {
-          errorHandler('delete error: database', request, response);
-        });
-    });
+  // dbClient.query(deleteSQL, deletedValues)
+  //   .then(data => {
+  //     dbClient.query(matchSQL)
+  //       .then(results => {
+  //         console.log(results);
+  //         if(results.rowCount === 0){
+  //           response.render('./pages/searches/new');
+  //         }else{
+  //           response.render('./pages/index', { book : results });
+  //         }
+  //       }).catch(error => {
+  //         errorHandler('delete error: database', request, response);
+  //       });
+  //   });
 }
 
 app.get('/hello', (request, response) => {
