@@ -4,7 +4,7 @@
     <img src=<%= book.image_url %> <br>
     <p><%= book.title %></p> <br>
     <p><%= book.author %></p> <br>
-    <a href='/pages/details'> View Details</a>
+    <a href='/books/<%= book.id %>'> View Details</a>
     <br>
   </article>
 <% }) %>
